@@ -13,9 +13,4 @@ import re
 # xor 0x13 = 0b0001_0011
 #   = 0x41 = 0b0100_0001
 
-with open("secret.hex", "rb") as file:
-	ciphertext = file.read()
-	plaintext = bytearray()
-	for index, character in enumerate(ciphertext):
-		plaintext.append(character ^ [0x13, 0x20][index % 2])
-	print(plaintext.decode("cp1252"))
+with open("secret.hex","rb") as f: print(bytearray([c^[0x13,0x20][i%2] for i,c in enumerate(f.read())]).decode("cp1252"))
