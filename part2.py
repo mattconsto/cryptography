@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 
-import re
-
 # Part Two
 # ========
 # Hint: The first letter of the original message is A
