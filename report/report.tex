@@ -1,0 +1,329 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{mathptmx}
+\usepackage{csquotes}
+\usepackage{geometry}
+\usepackage{parskip}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{lmodern}  % for bold teletype font
+\usepackage{amsmath}  % for \hookrightarrow
+\usepackage{xcolor}   % for \textcolor
+\usepackage{pgfplots, pgfplotstable}
+\usepackage{enumitem}
+\usepackage{adjustbox}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{float}
+
+\setlist{leftmargin=1em}
+
+\usepgfplotslibrary{statistics}
+
+\definecolor{deepblue}{rgb}{0,0,0.5}
+\definecolor{deepred}{rgb}{0.6,0,0}
+\definecolor{deepgreen}{rgb}{0,0.5,0}
+
+\lstdefinestyle{blockstyle}{
+	basicstyle=\scriptsize,
+	keywordstyle=\ttb\color{deepblue},
+	emphstyle=\ttb\color{deepred},
+	stringstyle=\color{deepgreen},
+	frame=single,
+	showstringspaces=false,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+	tabsize=2
+}
+\lstdefinestyle{basicstyle}{
+	showstringspaces=false,
+	breaklines=true,
+	tabsize=2
+}
+\lstset{style=basicstyle}
+%\lstset{language=Python}
+
+\setlength{\parindent}{0pt}
+
+\title{Cryptography Coursework}
+\date{February 2018}
+\author{Matthew Consterdine}
+
+\begin{document}
+
+\maketitle
+
+Three ciphertexts were presented, and three plaintexts were found.
+
+Cipher one is the Vingère cipher using the key "BYO". Cipher two is an XOR cipher using \textbf{\lstinline{[19, 32]}} as the masks. Cipher three is a product cipher comprised of an XOR cipher using \textbf{\lstinline{[12, 29]}} as the masks, and the Atbash cipher. To help with this task and for fun, a number of python scripts have been developed to both decipher and encipher text.
+
+\section{Cipher One: Vingère Cipher}
+
+\subsection{Solution}
+
+Key: \textbf{\lstinline{[1, 24, 14]}} "BYO"
+
+\fbox{\parbox{\textwidth}{
+The brain is a wondrous machine, but requires sustained effort to maintain it. You must train your brain to consider all possibilities before making decisions. Let your mind explore new places and probabilities. Learn from others; wisdom shared is wisdom expanded. When faced with something different and difficult, consider it a challenge.
+}}
+
+- "Dynamic Positive Thinking", by William Dollar. Published 2014 by Lulu Press.
+
+\subsection{Cryptanalysis}
+
+While the letters of the ciphertext appear random, the punctuation and casing is not. This indicates that a very simple cipher was used, a cipher that probably cannot handle anything other than a single cased Latin alphabet. Looking through the course material, it could be a Caesar, Vingère, Rotor, or another substitution cipher. It is unlikely to be a transposition cipher as even when enciphered, it looks like an English sentence. It is not a bitwise or modern block/stream cipher.
+
+\clearpage
+
+Now each cipher can be attempted. It is easy to bruteforce every possible Caesar shift, all of which are obviously wrong. This was done more for fun than to solve the problem, as it was highly unlikely that the word "gg" in the ciphertext could be decoded using any such cipher. In scrabble there are only two such words\footnote{List of two letter scrabble words: https://en.wikibooks.org/wiki/Scrabble/Two\_Letter\_Words}: "aa", and "mm"; both of which are rare onomatopoeia.
+
+\fbox{\parbox{\textwidth}{
+0. Ufs cpojl wt y kplrsmit kodfwoc, pvr ffoijpst qitrojlse ctgmfu rc nyworojl wu. Wcv ...\\
+1. Ter bonik vs x jokqrlhs jncevnb, ouq eenhiors phsqnikrd bsflet qb mxvnqnik vt. Vbu ...\\
+2. Sdq anmhj ur w injpqkgr imbduma, ntp ddmghnqr ogrpmhjqc arekds pa lwumpmhj us. Uat ...\\
+3. Rcp zmlgi tq v hmiopjfq hlactlz, mso cclfgmpq nfqolgipb zqdjcr oz kvtlolgi tr. Tzs ...\\
+4. Qbo ylkfh sp u glhnoiep gkzbsky, lrn bbkeflop mepnkfhoa ypcibq ny jusknkfh sq. Syr ...\\
+5. Pan xkjeg ro t fkgmnhdo fjyarjx, kqm aajdekno ldomjegnz xobhap mx itrjmjeg rp. Rxq ...\\
+6. Ozm wjidf qn s ejflmgcn eixzqiw, jpl zzicdjmn kcnlidfmy wnagzo lw hsqilidf qo. Qwp ...\\
+7. Nyl vihce pm r dieklfbm dhwyphv, iok yyhbcilm jbmkhcelx vmzfyn kv grphkhce pn. Pvo ...\\
+8. Mxk uhgbd ol q chdjkeal cgvxogu, hnj xxgabhkl ialjgbdkw ulyexm ju fqogjgbd om. Oun ...\\
+9. Lwj tgfac nk p bgcijdzk bfuwnft, gmi wwfzagjk hzkifacjv tkxdwl it epnfifac nl. Ntm ...\\
+10. Kvi sfezb mj o afbhicyj aetvmes, flh vveyzfij gyjhezbiu sjwcvk hs domehezb mk. Msl ...\\
+11. Juh redya li n zeaghbxi zdsuldr, ekg uudxyehi fxigdyaht rivbuj gr cnldgdya lj. Lrk ...\\
+12. Itg qdcxz kh m ydzfgawh ycrtkcq, djf ttcwxdgh ewhfcxzgs qhuati fq bmkcfcxz ki. Kqj ...\\
+13. Hsf pcbwy jg l xcyefzvg xbqsjbp, cie ssbvwcfg dvgebwyfr pgtzsh ep aljbebwy jh. Jpi ...\\
+14. Gre obavx if k wbxdeyuf wapriao, bhd rrauvbef cufdavxeq ofsyrg do zkiadavx ig. Ioh ...\\
+15. Fqd nazuw he j vawcdxte vzoqhzn, agc qqztuade bteczuwdp nerxqf cn yjhzczuw hf. Hng ...\\
+16. Epc mzytv gd i uzvbcwsd uynpgym, zfb ppystzcd asdbytvco mdqwpe bm xigybytv ge. Gmf ...\\
+17. Dob lyxsu fc h tyuabvrc txmofxl, yea ooxrsybc zrcaxsubn lcpvod al whfxaxsu fd. Fle ...\\
+18. Cna kxwrt eb g sxtzauqb swlnewk, xdz nnwqrxab yqbzwrtam kbounc zk vgewzwrt ec. Ekd ...\\
+19. Bmz jwvqs da f rwsyztpa rvkmdvj, wcy mmvpqwza xpayvqszl jantmb yj ufdvyvqs db. Djc ...\\
+20. Aly ivupr cz e qvrxysoz qujlcui, vbx lluopvyz wozxupryk izmsla xi tecuxupr ca. Cib ...\\
+21. Zkx hutoq by d puqwxrny ptikbth, uaw kktnouxy vnywtoqxj hylrkz wh sdbtwtoq bz. Bha ...\\
+22. Yjw gtsnp ax c otpvwqmx oshjasg, tzv jjsmntwx umxvsnpwi gxkqjy vg rcasvsnp ay. Agz ...\\
+23. Xiv fsrmo zw b nsouvplw nrgizrf, syu iirlmsvw tlwurmovh fwjpix uf qbzrurmo zx. Zfy ...\\
+24. Whu erqln yv a mrntuokv mqfhyqe, rxt hhqklruv skvtqlnug eviohw te payqtqln yw. Yex ...\\
+25. Vgt dqpkm xu z lqmstnju lpegxpd, qws ggpjkqtu rjuspkmtf duhngv sd ozxpspkm xv. Xdw ...
+}}
+
+Next the Vingère cipher was tested. To do so, a Python script was written which would identify the key length using the Kasiki test. The following repeats were found:
+
+\textbf{\string{\lstinline{y: [11, 272], rc: [54, 87], wu: [64, 271], dmbtgrfp: [95, 269], blr: [162, 252]}\string}}
+
+Now, the distances between repeats can be calculated: \textbf{\lstinline{[261, 33, 207, 174, 90]}}. Of them, the greatest common divisor is three. Three is small with a mere $25^3$ combinations. Therefore bruteforce was used. To reduce the number of possible answers, the word "the" was searched for as it is the most common word in the English language.
+
+The plaintext was found with the key \textbf{\lstinline{[1, 24, 14]}}, "BYO".
+
+\clearpage
+
+\section{Cipher Two: XOR Cipher}
+
+\subsection{Solution}
+
+Key: \textbf{\lstinline{[19, 32]}}
+
+\fbox{\parbox{\textwidth}{
+A 24 year old boy seeing out from the train’s window shouted…\\
+\\
+“Dad, look the trees are going behind!”\\
+Dad smiled and a young couple sitting nearby, looked at the 24 year old’s childish behavior with pity, suddenly he again exclaimed…\\
+\\
+“Dad, look the clouds are running with us!”\\
+\\
+The couple couldn’t resist and said to the old man…\\
+\\
+“Why don’t you take your son to a good doctor?” The old man smiled and said…“I did and we are just coming from the hospital, my son was blind from birth, he just got his eyes today.”\\
+\\
+Every single person on the planet has a story. Don’t judge people before you truly know them. The truth might surprise you.
+}}
+
+- "Everyone Has a Story in Life" in "Life of War", by Ranbir Singh. Published 2017 by Notion Press.
+
+\subsection{Cryptanalysis}
+
+When deciphering an unknown ciphertext, it pays to start simple. As the ciphertext contains many unusual or unprintable characters it is not a classic cipher, and instead one which operates on the byte level. It could be a modern block/stream cipher however plotting the frequency distribution reveals that the ciphertext has low entropy:\\
+
+\begin{adjustbox}{width=\textwidth}
+\begin{tikzpicture}
+\begin{axis}[ybar, xmin=0, xmax=256, ymin=0, width=\textwidth, height=0.33\textwidth, yticklabels={}]
+\addplot +[hist={bins=256, data min=0, data max=256}] table [y index=0] {../frequency.csv};
+\end{axis}
+\end{tikzpicture}
+\end{adjustbox}
+
+\clearpage
+
+Clearly the cipher is simple and insecure. It could be a shift cipher operating at the byte level, or it could be an XOR cipher. Simply shifting the bytes had little effect, but XOR proved fruitful. As it is known that the first character is "A", the mask, M, can be calculated and applied to the string:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ccccc}
+$M = ord("A") \oplus ord("R")$ & & $M = 0x41 \oplus 0x52$ & & $M = 0x13$\\
+\end{tabular}
+\end{table}
+
+With the results:
+
+\begin{lstlisting}[frame=single]
+00000000: 4113 3207 204a 6552 7213 6f5f 6413 625c  A.2. JeRr.o_d.b\
+00000010: 7913 7356 655a 6e54 205c 7547 2055 725c  y.sVeZnT \uG Ur\
+00000020: 6d13 745b 6513 7441 615a 6ec2 a173 1377  m.t[e.tAaZn..s.w
+00000030: 5a6e 576f 4420 4068 5c75 4765 57e2 80a6  ZnWoD @h\uGeW...
+\end{lstlisting}
+
+There are many invalid ASCII bytes, but only every other byte. This suggests that it is an XOR cipher with a key length of two. Looking at the ciphertext the NULL byte seems incredibly common, maybe it is a SPACE?
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ccccc}
+$M = ord(SPACE) \oplus ord(NULL)$ & & $M = 0x20 \oplus 0x00$ & & $M = 0x20$\\
+\end{tabular}
+\end{table}
+
+Applying returns the plaintext:
+
+\begin{lstlisting}[frame=single]
+00000000: 4120 3234 2079 6561 7220 6f6c 6420 626f  A 24 year old bo
+00000010: 7920 7365 6569 6e67 206f 7574 2066 726f  y seeing out fro
+00000020: 6d20 7468 6520 7472 6169 6ee2 8099 7320  m the train...s
+00000030: 7769 6e64 6f77 2073 686f 7574 6564 e280  window shouted..
+\end{lstlisting}
+
+The last piece of the puzzle is that the text isn't using ASCII or UTF-8, it is using CP1252.
+
+\clearpage
+
+\section{Cipher Three: Product Cipher (XOR + Atbash)}
+
+\subsection{Solution}
+
+Key: \textbf{\lstinline{[12, 29]}}
+
+\fbox{\parbox{\textwidth}{
+therearemorevolcanoesonvenusthananyotherplanetwithinoursolarsystem
+}}
+
+- Unknown
+
+\subsection{Cryptanalysis}
+
+\subsubsection{Part 1}
+
+After solving the first two ciphers, it is worth thinking about which ciphers haven't been used. Namely: a substitution ciphers, transposition ciphers, and modern ciphers. It is likely that at least one of them will be used as part of this cipher.
+
+Looking at the ciphertext, it appears to simply be printable ASCII characters, however closer examination reveals ASCII DELETE (0x7f) towards the end of the plaintext. Therefore, at least one of the two ciphers operates on the level of bytes. Rerunning the frequency distribution shows the plaintext values clustered between 0x96 and 0x127. This is larger than the Latin alphabet, but smaller than any real encoding.
+
+\begin{adjustbox}{width=\textwidth}
+\begin{tikzpicture}
+\begin{axis}[ybar, xmin=0, xmax=256, ymin=0, width=\textwidth, height=0.33\textwidth, yticklabels={}]
+\addplot +[hist={bins=256, data min=0, data max=256}] table [y index=0] {../frequency2.csv};
+\end{axis}
+\end{tikzpicture}
+\end{adjustbox}
+
+If the second of the ciphers is a substitution or transposition cipher, the first cipher needs to transform the ciphertext into a printable form as it is known that the plaintext is alphabetic. However, even after splitting the ciphertext into multiple bins it is impossible to do so by merely shifting the bytes. So, code was written to try every possible XOR mask, searching for one that just was printable. For this task, a regular expression was used:
+
+
+\textbf{\lstinline|/^[a-z]\{$length\}$/|} where \textbf{\lstinline{$length}} is equal to the length of the ciphertext.
+
+The following two texts were found:
+
+\begin{itemize}
+\item \textbf{[15, 29]} dsuiuzjvmljvfllxymovklneumehdsymymaldsuihoymuggrdsqmofjhooyikbkgun
+\item \textbf{[12, 29]} gsvivzivnliveloxzmlvhlmevmfhgszmzmblgsvikozmvgdrgsrmlfihlozihbhgvn
+\end{itemize}
+
+\subsubsection{Part 2}
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}[b]{0.3\textwidth}
+	\begin{tikzpicture}
+	\begin{axis}[ybar, xmin=0, xmax=26, ymin=0, width=\textwidth, height=\textwidth, yticklabels={}]
+	\addplot +[hist={bins=26, data min=0, data max=26}] table [y index=0] {../english.txt};
+	\end{axis}
+	\end{tikzpicture}
+	\caption{English}
+	\label{fig:frequency-english}
+\end{subfigure}
+\begin{subfigure}[b]{0.3\textwidth}
+	\begin{tikzpicture}
+	\begin{axis}[ybar, xmin=0, xmax=26, ymin=0, width=\textwidth, height=\textwidth, yticklabels={}]
+	\addplot +[hist={bins=26, data min=0, data max=26}] table [y index=0] {../frequency4.txt};
+	\end{axis}
+	\end{tikzpicture}
+	\caption{dsuiuzj...}
+	\label{fig:frequency-dsuiuzj}
+\end{subfigure}
+\begin{subfigure}[b]{0.3\textwidth}
+	\begin{tikzpicture}
+	\begin{axis}[ybar, xmin=0, xmax=26, ymin=0, width=\textwidth, height=\textwidth, yticklabels={}]
+	\addplot +[hist={bins=26, data min=0, data max=26}] table [y index=0] {../frequency3.txt};
+	\end{axis}
+	\end{tikzpicture}
+	\caption{gsvivzi...}
+	\label{fig:frequency-gsvivzi}
+\end{subfigure}
+\end{figure}
+
+Plotting the frequency distribution of the two texts reveals that the second middletext appears to match the frequency distribution of the English language, just reversed. So, the characters in both texts were inverted, with the results as follows:
+
+\begin{itemize}
+\item \textbf{[15, 29]} whfrfaqenoqeuoocbnlepomvfnvswhbnbnzowhfrslbnfttiwhjnluqsllbrpyptfm
+\item \textbf{[12, 29]} therearemorevolcanoesonvenusthananyotherplanetwithinoursolarsystem
+\end{itemize}
+
+The first is obviously wrong, and the second is likely right.
+
+\begin{table}[H]
+\centering
+\begin{adjustbox}{width=\textwidth}
+\begin{tabular}{l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l}
+A & B & C & D & E & F & G & H & I & J & K & L & M & N & O & P & Q & R & S & T & U & V & W & X & Y & Z\\
+\hline
+Z & Y & X & W & V & U & T & S & R & Q & P & O & N & M & L & K & J & I & H & G & F & E & D & C & B & A\\
+\end{tabular}
+\end{adjustbox}
+\end{table}
+
+\vspace{-2.5mm} % Improve spacing
+
+This is the Atbash cipher where Z is mapped to A, Y is mapped to B and so on.
+
+\clearpage
+
+\section{Appendix}
+
+\subsection{Cipher One Code}
+
+caesar.py
+
+\lstinputlisting[firstline=3, style=blockstyle, frame=tb, language=Python]{../caesar2.py}
+
+part1.py
+
+\lstinputlisting[firstline=3, style=blockstyle, frame=tb, language=Python]{../part1.py}
+
+\subsection{Cipher Two Code}
+
+frequency.py
+
+\lstinputlisting[firstline=3, style=blockstyle, frame=tb, language=Python]{../frequency.py}
+
+part2.py
+
+\lstinputlisting[firstline=3, style=blockstyle, frame=tb, language=Python]{../part2.py}
+
+\subsection{Cipher Three Code}
+
+english.py
+
+\lstinputlisting[firstline=3, style=blockstyle, frame=tb, language=Python]{../english.py}
+
+part3.py
+
+\lstinputlisting[firstline=3, style=blockstyle, frame=tb, language=Python]{../part3.py}
+
+\end{document}

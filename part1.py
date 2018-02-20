@@ -5,19 +5,18 @@ from functools import reduce
 from collections import defaultdict
 import math, re
 
-# Part One
-# ========
-# Vinginere
+# Part One (Viginere)
 
 # Find the key length
 def kasiki(ciphertext):
-	ciphertext = re.sub(r"[^a-z ]", "", ciphertext.lower() + " ") # Adding a space ensures the last word is always added.
+	# Adding a space ensures the last word is always added.
+	ciphertext = re.sub(r"[^a-z ]", "", ciphertext.lower() + " ")
 	positions = defaultdict(list)
 	position = 0
 	word = ""
 
 	# Identify words
-	for character in ciphertext:
+	for character in enumerate(ciphertext):
 		if character == " ":
 			if word != "":
 				positions[word].append(position)
@@ -39,7 +38,7 @@ def kasiki(ciphertext):
 def reformat(plain, cipher):
 	return "".join(list(map(lambda c: plain.pop(0).lower() if c>="a" and c<="z" else (plain.pop(0).upper() if c>="A" and c<="Z" else c), cipher)))
 
-def decipher(ciphertext, keylength):
+def decipher(ciphertext, keylength, prefix):
 	# Brute force, as the keylength is only 3
 	lowertext = re.sub(r"[^a-z]", "", ciphertext.lower())
 	for it in range(26**keylength):
@@ -50,7 +49,6 @@ def decipher(ciphertext, keylength):
 
 # Find the keylength
 ciphertext = "Ufs cpojl wt y kplrsmit kodfwoc, pvr ffoijpst qitrojlse ctgmfu rc nyworojl wu. Wcv kitr hsywo wcvp psywo rc dmbtgrfp omj dpqgjzwmghjcg cctpps nyyjlu ecqjqwplg. Mch zmis kwob synzpps ock qjodcg blr qpccypjjwugst. Jsbpb gpcn mhicft; uwtbcn qvbpse gg xggema fvdblrfb. Kicb gyqfb kjrv tmafrvjlu egtgcfflh blr egtggqvjh, dmbtgrfp wu y qiyzmcbhc."
-prefix = "the"
 keylength = kasiki(ciphertext)
 print(keylength)
-decipher(ciphertext, keylength)
+decipher(ciphertext, keylength, "the") # "the" is the prefix
